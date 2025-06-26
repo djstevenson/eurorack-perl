@@ -9,7 +9,7 @@ use feature qw(signatures);
 
 use Eurorack::Constants qw(:all);
 
-extends 'Eurorack::Common::Base';
+extends 'Eurorack::Common::Named';
 
 has height_u => (
     is          => 'ro',

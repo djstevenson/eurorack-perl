@@ -10,7 +10,7 @@ use feature qw(signatures);
 use Eurorack::Constants qw(:all);
 use Eurorack::Rack::Row;
 
-extends 'Eurorack::Common::Base';
+extends 'Eurorack::Common::Named';
 
 has rows_u => (
     is          => 'ro',
