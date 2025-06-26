@@ -11,12 +11,6 @@ use Data::Dumper;
 use Eurorack::Constants qw(:all);
 extends 'Eurorack::Common::Base';
 
-has width_hp => (
-    is          => 'ro',
-    isa         => 'Int',
-    required    => 1,
-);
-
 has y_offset_mm => (
     is          => 'ro',
     isa         => 'Num',
@@ -42,6 +36,14 @@ sub render($self) {
 
     my $x_offset_mm = 0;
     my $y_offset_mm = $self->y_offset_mm;
+    my $width_mm    = $self->width_mm; 
+
+    if ($y_offset_mm > 0.1) {
+        # Divider
+        $svg .= qq{    <line x1="0" y1="${y_offset_mm}" x2="${width_mm}" y2="${y_offset_mm}"
+            stroke="black" stroke-width="0.5"/>\n};
+    }
+
 
     for my $module ($self->all_modules) {
         $svg .= $module->render($x_offset_mm, $y_offset_mm);
