@@ -1,22 +1,14 @@
-package Eurorack::Common::Named;
-use Moose;
+package Eurorack::Role::Name;
+use Moose::Role;
 use namespace::autoclean;
+use Eurorack::Prelude;
 
-use Carp qw(croak);
-
-use utf8;
-use feature qw(signatures);
-use Readonly;
-use Carp qw(croak);
-
-use Eurorack::Constants qw(:all);
-
-extends 'Eurorack::Common::Base';
+requires 'class_regex';
 
 has _class_regex => (
     is          => 'ro',
     isa         => 'RegexpRef',
-    required    => 1,
+    builder     => 'class_regex',    # Provided by consumer
 );
 
 has brand => (

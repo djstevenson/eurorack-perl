@@ -1,16 +1,18 @@
-package Eurorack::Rack::Base;
-use Moose;
+package Eurorack::Role::Rack;
+use Moose::Role;
 use namespace::autoclean;
+use Eurorack::Prelude;
 
-use Carp qw(croak);
+with
+  'Eurorack::Role::Name',
+  'Eurorack::Role::Size',
+  'Eurorack::Role::Colour';
 
-use utf8;
-use feature qw(signatures);
-
-use Eurorack::Constants qw(:all);
 use Eurorack::Rack::Row;
 
-extends 'Eurorack::Common::Named';
+sub class_regex($self) {
+     return qr/\AEurorack::Rack::(?<brand>[^:]+)::(?<model>[^:]+)\Z/;
+}
 
 has rows_u => (
     is          => 'ro',
@@ -34,15 +36,6 @@ has height_mm => (
         return $height;
     },
 );
-
-has rack_colour => (
-    is          => 'ro',
-    isa         => 'Str',
-    lazy        => 1,
-    default     => 'white',
-);
-
-has '+edge_colour' => (default => 'black');
 
 has _rack_rows => (
     traits	    => ['Array'],
@@ -71,8 +64,6 @@ has _rack_rows => (
         get_row    => 'get',
     },
 );
-
-has '+_class_regex' => (default => sub { return qr/\AEurorack::Rack::(?<brand>[^:]+)::(?<model>[^:]+)\Z/; } );
 
 sub render($self) {
     my $rack_width  = $self->width_mm;

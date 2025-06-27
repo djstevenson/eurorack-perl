@@ -1,15 +1,11 @@
 package Eurorack::Rack::Row;
 use Moose;
 use namespace::autoclean;
+use Eurorack::Prelude;
 
-use Carp qw(croak);
+use Eurorack::Role::Module;
 
-use utf8;
-use feature qw(signatures);
-use Data::Dumper;
-
-use Eurorack::Constants qw(:all);
-extends 'Eurorack::Common::Base';
+with 'Eurorack::Role::Size';
 
 has y_offset_mm => (
     is          => 'ro',
@@ -20,7 +16,7 @@ has y_offset_mm => (
 has _modules => (
     traits	    => ['Array'],
     is          => 'ro',
-    isa         => 'ArrayRef[Eurorack::Module::Base]',
+    isa         => 'ArrayRef[Eurorack::Role::Module]',
     lazy        => 1,
     default     => sub { return []; },
     handles     => {

@@ -1,11 +1,10 @@
 package Eurorack::Rack::Behringer::Go;
 use Moose;
 use namespace::autoclean;
+use Eurorack::Prelude;
 
-use utf8;
-use feature qw(signatures);
-
-extends 'Eurorack::Rack::Base';
+with
+  'Eurorack::Role::Rack';
 
 # Two 3U rows of 140HP
 
