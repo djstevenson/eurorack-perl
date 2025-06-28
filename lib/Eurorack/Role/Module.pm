@@ -8,10 +8,6 @@ with
   'Eurorack::Role::Size',
   'Eurorack::Role::Colour';
 
-sub class_regex($self) {
-     return qr/\AEurorack::Module::(?<brand>[^:]+)::(?<model>[^:]+)\Z/;
-}
-
 # sub set_fill_colour($self) { return '#e0f7fa' };
 sub set_fill_colour($self) { '#d3d3d3' }
 
