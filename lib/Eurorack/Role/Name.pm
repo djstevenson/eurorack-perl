@@ -39,6 +39,8 @@ sub set_brand($self) {
     return $brand_class->new;
 }
 
+# Default implementation gets the brand from the class name.
+# you probably don't need to override this
 has model => (
     is          => 'ro',
     isa         => 'Str',

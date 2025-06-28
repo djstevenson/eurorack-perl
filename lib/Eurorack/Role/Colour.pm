@@ -10,7 +10,7 @@ has edge_colour => (
     builder     => 'set_edge_colour',
 );
 
-sub set_edge_colour($self) { 'black' }
+sub set_edge_colour($self) { '#444' }
 
 has fill_colour => (
     is          => 'ro',
