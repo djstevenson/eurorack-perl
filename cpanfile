@@ -5,3 +5,5 @@ requires 'Readonly';
 requires 'Carp';
 requires 'FindBin::libs';
 requires 'Import::Into';
+requires 'Class::Load';
+requires 'Try::Tiny';

@@ -1,4 +1,4 @@
-package Eurorack::Module::Example::VCA;
+package Eurorack::Module::_2HP::Sine;
 use Moose;
 use namespace::autoclean;
 use Eurorack::Prelude;
@@ -6,6 +6,6 @@ use Eurorack::Prelude;
 with
   'Eurorack::Role::Module';
 
-has '+width_hp' => (default => 12);
+has '+width_hp' => (default => 2);
 
 1;
