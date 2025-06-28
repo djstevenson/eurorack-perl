@@ -8,16 +8,20 @@ use feature qw(signatures);
 use FindBin::libs;
 
 use Eurorack::Rack::Behringer::Go;
-use Eurorack::Module::Example::VCO;
-use Eurorack::Module::Example::LFO;
-use Eurorack::Module::Example::VCF;
-use Eurorack::Module::Example::VCA;
+use Eurorack::Module::Behringer::ModelD;
+use Eurorack::Module::_2HP::Mix;
+use Eurorack::Module::_2HP::Pluck;
+use Eurorack::Module::_2HP::Sine;
+use Eurorack::Module::Behringer::Victor;
+use Eurorack::Module::Behringer::KobolExpander;
 
 my $rack = Eurorack::Rack::Behringer::Go->new;
 
-$rack->add_module(0, Eurorack::Module::Example::VCO->new);
-$rack->add_module(0, Eurorack::Module::Example::LFO->new);
-$rack->add_module(1, Eurorack::Module::Example::VCF->new);
-$rack->add_module(1, Eurorack::Module::Example::VCA->new);
+$rack->add_module(0, Eurorack::Module::Behringer::ModelD->new);
+$rack->add_module(0, Eurorack::Module::_2HP::Mix->new);
+$rack->add_module(0, Eurorack::Module::_2HP::Pluck->new);
+$rack->add_module(0, Eurorack::Module::_2HP::Sine->new);
+$rack->add_module(1, Eurorack::Module::Behringer::Victor->new);
+$rack->add_module(1, Eurorack::Module::Behringer::KobolExpander->new);
 
 print $rack->render;

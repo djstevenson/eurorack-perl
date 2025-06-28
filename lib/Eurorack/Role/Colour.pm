@@ -6,9 +6,11 @@ use Eurorack::Prelude;
 has edge_colour => (
     is          => 'ro',
     isa         => 'Str',
-    required    => 1,
-    default     => 'black',
+    lazy        => 1,
+    builder     => 'set_edge_colour',
 );
+
+sub set_edge_colour($self) { '#444' }
 
 has fill_colour => (
     is          => 'ro',
@@ -18,5 +20,14 @@ has fill_colour => (
 );
 
 sub set_fill_colour($self) { 'white' }
+
+has text_colour => (
+    is          => 'ro',
+    isa         => 'Str',
+    lazy        => 1,
+    builder     => 'set_text_colour',
+);
+
+sub set_text_colour($self) { 'black' }
 
 1;

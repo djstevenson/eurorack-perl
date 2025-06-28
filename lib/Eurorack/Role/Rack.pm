@@ -10,9 +10,7 @@ with
 
 use Eurorack::Rack::Row;
 
-sub class_regex($self) {
-     return qr/\AEurorack::Rack::(?<brand>[^:]+)::(?<model>[^:]+)\Z/;
-}
+sub set_fill_colour($self) { '#36383b' }  # Slightly-darkened Perse Grey
 
 has rows_u => (
     is          => 'ro',
@@ -68,13 +66,15 @@ has _rack_rows => (
 sub render($self) {
     my $rack_width  = $self->width_mm;
     my $rack_height = $self->height_mm;
+    my $fill_colour = $self->fill_colour;
+    my $edge_colour = $self->edge_colour;
 
     my $svg = <<"SVG";
         <svg xmlns="http://www.w3.org/2000/svg"
             width="${rack_width}mm" height="${rack_height}mm"
             viewBox="0 0 ${rack_width} ${rack_height}">
         <rect x="0" y="0" width="${rack_width}" height="${rack_height}"
-                fill="white" stroke="black" stroke-width="1"/>
+                fill="${fill_colour}" stroke="${edge_colour}" stroke-width="1"/>
 SVG
 
     for my $row ($self->all_rows) {
