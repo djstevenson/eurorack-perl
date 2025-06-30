@@ -8,12 +8,23 @@ with
   'Eurorack::Role::Size',
   'Eurorack::Role::Colour';
 
-sub class_regex($self) {
-     return qr/\AEurorack::Module::(?<brand>[^:]+)::(?<model>[^:]+)\Z/;
-}
-
 # sub set_fill_colour($self) { return '#e0f7fa' };
 sub set_fill_colour($self) { '#d3d3d3' }
+
+use Eurorack::Role::Feature;
+has _features => (
+    traits	    => ['Array'],
+    is          => 'ro',
+    isa         => 'ArrayRef[Eurorack::Role::Feature]',
+    lazy        => 1,
+    default     => sub { return []; },
+    handles     => {
+        n_features   => 'count',
+        all_features => 'elements',
+        get_feature  => 'get',
+        add_feature  => 'push',
+    },
+);
 
 sub render($self, $x, $y) {
     my $width       = $self->width_mm;
@@ -25,6 +36,11 @@ sub render($self, $x, $y) {
     my $text_colour = $self->text_colour;
     my $font_size   = $self->width_hp > 2 ? 7 : 4;
     
+    my $features_svg = '';
+    for my $feature ($self->all_features) {
+        $features_svg .= $feature->render($x, $y);
+    }
+
     return qq{
         <g>
             <rect x="${x}" y="${y}" width="${width}" height="${height}"
@@ -33,6 +49,7 @@ sub render($self, $x, $y) {
                 font-family="sans-serif" fill="${text_colour}" font-weight="bold">@{[$self->brand->name]}</text>
             <text x="${xcentre}" y="@{[$y + 20]}" font-size="${font_size}" text-anchor="middle" dominant-baseline="hanging"
                 font-family="sans-serif" fill="${text_colour}" font-weight="bold">${label}</text>
+            ${features_svg}
         </g>
     };
 }
