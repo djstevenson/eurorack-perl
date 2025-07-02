@@ -28,7 +28,7 @@ sub render($self, $feature_cx, $feature_cy) {
     my ($label_cx, $label_cy) = $self->_calculate_label_position($feature_cx, $feature_cy);
     
     return sprintf(
-        '<text x="%.2f" y="%.2f" text-anchor="middle" class="label">%s</text>',
+        '<text x="%.2f" y="%.2f" text-anchor="middle" font-size="5" class="label">%s</text>',
         $label_cx, $label_cy, $self->text
     );
 }
