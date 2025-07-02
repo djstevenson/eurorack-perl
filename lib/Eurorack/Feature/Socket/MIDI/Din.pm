@@ -6,6 +6,18 @@ use Eurorack::Prelude;
 with
     'Eurorack::Role::Feature';
 
+use Eurorack::Feature::Label;
+
+has '+label' => (
+    default => sub {
+        return Eurorack::Feature::Label->new(
+            text     => 'MIDI In',
+            position => 'north',
+            distance => 12,
+        )
+    },
+);
+
 sub render($self, $mx, $my) {  # Module pos
     my ($cx, $cy) = ($mx+$self->x, $my+$self->y);  # center x/y in mm
 
