@@ -48,5 +48,10 @@ sub render($self, $mx, $my) {  # Module pos
 SVG
 }
 
+sub _default_label_text {
+    return 'USB';
+}
+
+
 __PACKAGE__->meta->make_immutable;
 1;
