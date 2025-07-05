@@ -34,7 +34,7 @@ sub BUILD($self, $args) {
     $self->add_feature(Eurorack::Feature::Socket::Jack::Mono3_5mm::CircularNut->new(x => 220, y => 120));
     $self->add_feature(Eurorack::Feature::Socket::Jack::Mono3_5mm::CircularNut->new(x => 240, y => 120));
     $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 20));
-    $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 50, radius => 4));
+    $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 50, radius => 4, min_value => 0, max_value => 4, labels => ["32'", "16'", "8'", "4'", "2'"], start_angle => 180, angle_range => 180, value => 2));
 }
 
 1;

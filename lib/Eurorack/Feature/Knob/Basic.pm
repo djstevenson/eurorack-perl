@@ -47,16 +47,20 @@ sub render($self, $mx, $my) {  # Module pos
         <line x1="$kx1" y1="$ky1" x2="$kx2" y2="$ky2"
             stroke="white" stroke-width="1.0"/>};
 
-    # Draw labels 0..10
-    for my $i (0 .. 10) {
-        my $label_rad = $self->_value_to_angle_rad($i);
+    # Draw labels using configurable range
+    my $labels = $self->labels;
+    my $range = $self->max_value - $self->min_value;
+
+    for my $i (0 .. $#$labels) {
+        my $normalized_value = $self->min_value + ($i * $range / $#$labels);
+        my $label_rad = $self->_value_to_angle_rad($normalized_value);
         my $lx = $cx + $label_radius * cos($label_rad);
         my $ly = $cy + $label_radius * sin($label_rad);
 
         $svg .= qq{
             <text x="$lx" y="$ly"
                 font-size="3" text-anchor="middle" dominant-baseline="middle"
-                font-family="sans-serif" fill="black">$i</text>};
+                font-family="sans-serif" fill="black">$labels->[$i]</text>};
     }
 
     $svg .= "\n</g>\n";
@@ -64,7 +68,9 @@ sub render($self, $mx, $my) {  # Module pos
 }
 
 sub _value_to_angle_rad($self, $value) {
-    return (135 + 270 * $value / 10) * 3.141592653589793 / 180;
+    my $range = $self->max_value - $self->min_value;
+    my $normalized = ($value - $self->min_value) / $range;
+    return ($self->start_angle + $self->angle_range * $normalized) * 3.141592653589793 / 180;
 }
 
 __PACKAGE__->meta->make_immutable;
