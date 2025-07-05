@@ -16,7 +16,6 @@ use Eurorack::Feature::Socket::Jack::Mono3_5mm::HexNut;
 use Eurorack::Feature::Socket::Jack::Mono3_5mm::CircularNut;
 
 sub BUILD($self, $args) {
-  $DB::single = 1;
     $self->add_feature(Eurorack::Feature::Socket::MIDI::Din->new(x =>20, y => 20, label_text => 'MIDI In', label_inverted => 1));
     $self->add_feature(Eurorack::Feature::Socket::USB::TypeB->new(x =>50, y => 20));
     $self->add_feature(Eurorack::Feature::Socket::USB::TypeC->new(x =>50, y => 50));
