@@ -27,31 +27,36 @@ has 'label_distance' => (
     default => 12,
 );
 
+has 'label_inverted' => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 0,
+);
+
 has 'label' => (
-    is        => 'ro',
+    is        => 'rw',
     isa       => 'Eurorack::Feature::Label',
     predicate => 'has_label',
-    lazy      => 1,
-    builder   => '_build_label',
+    init_arg  => undef,
 );
 
 # Default is no label, override this to create a 
 # default label
 sub _default_label_text { return; };
 
-sub _build_label {
-    my $self = shift;
-    
+sub BUILD($self, $args) {
     # Use provided label_text or fall back to default
     my $text = $self->has_label_text ? $self->label_text : $self->_default_label_text;
+    if (defined $text) {
+        my $label = Eurorack::Feature::Label->new(
+            text     => $text,
+            position => $self->label_position,
+            distance => $self->label_distance,
+            inverted => $self->label_inverted,
+        );
+        $self->label($label);
+    }
     
-    return unless defined $text;
-    
-    return Eurorack::Feature::Label->new(
-        text     => $text,
-        position => $self->label_position,
-        distance => $self->label_distance,
-    );
 }
 
 requires 'render';
