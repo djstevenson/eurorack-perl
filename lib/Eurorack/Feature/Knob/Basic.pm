@@ -27,16 +27,22 @@ sub render($self, $mx, $my) {  # Module pos
             fill="black" stroke="black" stroke-width="0.4"/>};
 
     # Draw marker for current value
-    my $outer_marker_margin = 1;
-    my $inner_marker_margin = 2;
+    my $outer_marker_margin1 = 0;
+    my $outer_marker_margin2 = -2;
+    my $inner_marker_margin = 0;
     my $angle_rad = $self->_value_to_angle_rad($value);
 
-    my $kx1 = $cx + $inner_marker_margin * cos($angle_rad);
-    my $ky1 = $cy + $inner_marker_margin * sin($angle_rad);
-    # my $kx2 = $cx + $outer_marker_margin * cos($angle_rad);
-    # my $ky2 = $cy + $outer_marker_margin * sin($angle_rad);
-    my $kx2 = $cx + ($radius - $outer_marker_margin) * cos($angle_rad);
-    my $ky2 = $cy + ($radius - $outer_marker_margin) * sin($angle_rad);
+    my $car = cos($angle_rad);
+    my $sar = sin($angle_rad);
+    my $kx1 = $cx + $inner_marker_margin * $car;
+    my $ky1 = $cy + $inner_marker_margin * $sar;
+    my $kx2 = $cx + ($radius - $outer_marker_margin1) * $car;
+    my $ky2 = $cy + ($radius - $outer_marker_margin1) * $sar;
+    my $kx3 = $cx + ($radius - $outer_marker_margin2) * $car;
+    my $ky3 = $cy + ($radius - $outer_marker_margin2) * $sar;
+    $svg .= qq{
+        <line x1="$kx1" y1="$ky1" x2="$kx3" y2="$ky3"
+            stroke="black" stroke-width="0.5"/>};
     $svg .= qq{
         <line x1="$kx1" y1="$ky1" x2="$kx2" y2="$ky2"
             stroke="white" stroke-width="1.0"/>};
