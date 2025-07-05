@@ -1,5 +1,6 @@
 requires 'Moose';
 requires 'Moose::Role';
+requires 'Moose::Util::TypeConstraints';
 requires 'namespace::autoclean';
 requires 'Readonly';
 requires 'Carp';
