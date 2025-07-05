@@ -16,6 +16,7 @@ use Eurorack::Feature::Socket::Jack::Mono3_5mm::HexNut;
 use Eurorack::Feature::Socket::Jack::Mono3_5mm::CircularNut;
 use Eurorack::Feature::Socket::Row;
 use Eurorack::Feature::Socket::Array;
+use Eurorack::Feature::Socket::Column;
 use Eurorack::Feature::Knob::Basic;
 
 sub BUILD($self, $args) {
@@ -48,6 +49,13 @@ sub BUILD($self, $args) {
             ['Out1', 'Out2', 'Out3'],
             ['CV1', 'CV2', 'CV3']
         ]
+    ));
+    $self->add_feature(Eurorack::Feature::Socket::Column->new(
+        x => 280, y => 20,
+        socket_class => 'Eurorack::Feature::Socket::Jack::Mono3_5mm::CircularNut',
+        spacing => 20,
+        count => 3,
+        labels => ['Gate', 'Trig', 'Sync']
     ));
     $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 20));
     $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 50, radius => 4, min_value => 0, max_value => 4, labels => ["32'", "16'", "8'", "4'", "2'"], start_angle => 180, angle_range => 180, value => 2));

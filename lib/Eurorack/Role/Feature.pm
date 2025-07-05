@@ -24,7 +24,7 @@ has 'label_position' => (
 has 'label_distance' => (
     is      => 'ro',
     isa     => 'Num',
-    default => 12,
+    default => 8,
 );
 
 has 'label_inverted' => (

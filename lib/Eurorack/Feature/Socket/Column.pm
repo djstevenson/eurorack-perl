@@ -1,4 +1,4 @@
-package Eurorack::Feature::Socket::Row;
+package Eurorack::Feature::Socket::Column;
 use Moose;
 use namespace::autoclean;
 use Eurorack::Prelude;
@@ -39,15 +39,18 @@ has '_array' => (
 );
 
 sub _build_array($self) {
+    # Convert flat label array to 2D array for Array feature
+    my @labels_2d = map { [$_] } @{$self->labels};
+    
     return Eurorack::Feature::Socket::Array->new(
         x => $self->x,
         y => $self->y,
         socket_class => $self->socket_class,
-        spacing_x => $self->spacing,
-        spacing_y => 0,
-        columns => $self->count,
-        rows => 1,
-        labels => [$self->labels],
+        spacing_x => 0,
+        spacing_y => $self->spacing,
+        columns => 1,
+        rows => $self->count,
+        labels => \@labels_2d,
     );
 }
 
