@@ -26,6 +26,20 @@ has _features => (
     },
 );
 
+has _sections => (
+    traits	    => ['Array'],
+    is          => 'ro',
+    isa         => 'ArrayRef[Eurorack::Role::Feature]',
+    lazy        => 1,
+    default     => sub { return []; },
+    handles     => {
+        n_sections   => 'count',
+        all_sections => 'elements',
+        get_section  => 'get',
+        add_section  => 'push',
+    },
+);
+
 sub render($self, $x, $y) {
     my $width       = $self->width_mm;
     my $xcentre     = $x + $width / 2.0;
@@ -35,6 +49,11 @@ sub render($self, $x, $y) {
     my $edge_colour = $self->edge_colour;
     my $text_colour = $self->text_colour;
     my $font_size   = $self->width_hp > 2 ? 7 : 4;
+    
+    my $sections_svg = '';
+    for my $section ($self->all_sections) {
+        $sections_svg .= $section->render($x, $y);
+    }
     
     my $features_svg = '';
     for my $feature ($self->all_features) {
@@ -49,7 +68,7 @@ sub render($self, $x, $y) {
                 font-family="sans-serif" fill="${text_colour}" font-weight="bold">@{[$self->brand->name]}</text>
             <text x="${xcentre}" y="@{[$y + 20]}" font-size="${font_size}" text-anchor="middle" dominant-baseline="hanging"
                 font-family="sans-serif" fill="${text_colour}" font-weight="bold">${label}</text>
-            ${features_svg}
+            ${sections_svg}${features_svg}
         </g>
     };
 }
