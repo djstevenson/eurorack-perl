@@ -20,9 +20,21 @@ use Eurorack::Feature::Socket::Column;
 use Eurorack::Feature::Knob::Basic;
 use Eurorack::Feature::Switch::Rocker;
 use Eurorack::Feature::SectionBorder::Basic;
+use Eurorack::Feature::Text::Basic;
 
 sub BUILD($self, $args) {
-    # Add section borders first (rendered before features)
+    # Add text markings first (rendered behind everything)
+    $self->add_text(Eurorack::Feature::Text::Basic->new(
+        x => 50, y => 95, text => 'INPUTS', font_size => 5, font_weight => 'bold'
+    ));
+    $self->add_text(Eurorack::Feature::Text::Basic->new(
+        x => 220, y => 95, text => 'OUTPUTS', font_size => 5, font_weight => 'bold'
+    ));
+    $self->add_text(Eurorack::Feature::Text::Basic->new(
+        x => 280, y => 90, text => 'CV', font_size => 5, font_weight => 'bold'
+    ));
+    
+    # Add section borders next (rendered before features)
     $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
         x => 15, y => 35, width => 70, height => 50
     ));
