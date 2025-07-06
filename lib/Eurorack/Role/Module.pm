@@ -48,7 +48,7 @@ sub render($self, $x, $y) {
     my $fill_colour = $self->fill_colour;
     my $edge_colour = $self->edge_colour;
     my $text_colour = $self->text_colour;
-    my $font_size   = $self->width_hp > 2 ? 7 : 4;
+    my $font_size   = $self->width_hp > 2 ? 7 : 3;
     
     my $sections_svg = '';
     for my $section ($self->all_sections) {
