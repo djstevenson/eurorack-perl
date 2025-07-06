@@ -24,61 +24,52 @@ sub render($self, $mx, $my) {
     <rect x="$body_x" y="$body_y" width="$w" height="$h"
         fill="white" stroke="black" stroke-width="0.4"/>};
     
-    # Active side indicator (filled rectangle on the pressed side)
+    # Active side indicator with state label in white text
     if ($orientation eq 'horizontal') {
         if ($state eq 'on') {
             # Fill right side for 'on'
             my $fill_x = $cx;
+            my $text_x = $cx + $w/4;  # Center of right half
             $svg .= qq{
     <!-- Active side -->
     <rect x="$fill_x" y="$body_y" width="} . ($w/2) . qq{" height="$h"
-        fill="black"/>};
+        fill="black"/>
+    <!-- State label -->
+    <text x="$text_x" y="$cy" text-anchor="middle" font-size="2.5" class="label" 
+        dominant-baseline="middle" fill="white">} . uc($self->on_label) . qq{</text>};
         } else {
             # Fill left side for 'off'
+            my $text_x = $cx - $w/4;  # Center of left half
             $svg .= qq{
     <!-- Active side -->
     <rect x="$body_x" y="$body_y" width="} . ($w/2) . qq{" height="$h"
-        fill="black"/>};
+        fill="black"/>
+    <!-- State label -->
+    <text x="$text_x" y="$cy" text-anchor="middle" font-size="2.5" class="label" 
+        dominant-baseline="middle" fill="white">} . uc($self->off_label) . qq{</text>};
         }
     } else { # vertical
         if ($state eq 'on') {
             # Fill top side for 'on'
+            my $text_y = $cy - $h/4;  # Center of top half
             $svg .= qq{
     <!-- Active side -->
     <rect x="$body_x" y="$body_y" width="$w" height="} . ($h/2) . qq{"
-        fill="black"/>};
+        fill="black"/>
+    <!-- State label -->
+    <text x="$cx" y="$text_y" text-anchor="middle" font-size="2.5" class="label" 
+        dominant-baseline="middle" fill="white">} . uc($self->on_label) . qq{</text>};
         } else {
             # Fill bottom side for 'off'
             my $fill_y = $cy;
+            my $text_y = $cy + $h/4;  # Center of bottom half
             $svg .= qq{
     <!-- Active side -->
     <rect x="$body_x" y="$fill_y" width="$w" height="} . ($h/2) . qq{"
-        fill="black"/>};
-        }
-    }
-    
-    
-    # Add state labels for on/off positions (when no custom label is provided)
-    if (!$self->has_label_text) {
-        my $label_distance = 3;
-        if ($orientation eq 'horizontal') {
-            my $on_x = $cx + $w/2 + $label_distance;
-            my $off_x = $cx - $w/2 - $label_distance;
-            $svg .= qq{
-    <!-- Position labels -->
-    <text x="$on_x" y="$cy" text-anchor="start" font-size="3" class="label" 
-        dominant-baseline="middle">} . $self->on_label . qq{</text>
-    <text x="$off_x" y="$cy" text-anchor="end" font-size="3" class="label" 
-        dominant-baseline="middle">} . $self->off_label . qq{</text>};
-        } else { # vertical
-            my $on_y = $cy - $h/2 - $label_distance;
-            my $off_y = $cy + $h/2 + $label_distance;
-            $svg .= qq{
-    <!-- Position labels -->
-    <text x="$cx" y="$on_y" text-anchor="middle" font-size="3" class="label" 
-        dominant-baseline="middle">} . $self->on_label . qq{</text>
-    <text x="$cx" y="$off_y" text-anchor="middle" font-size="3" class="label" 
-        dominant-baseline="middle">} . $self->off_label . qq{</text>};
+        fill="black"/>
+    <!-- State label -->
+    <text x="$cx" y="$text_y" text-anchor="middle" font-size="2.5" class="label" 
+        dominant-baseline="middle" fill="white">} . uc($self->off_label) . qq{</text>};
         }
     }
     
