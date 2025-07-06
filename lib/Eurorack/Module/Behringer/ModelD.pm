@@ -18,8 +18,24 @@ use Eurorack::Feature::Socket::Row;
 use Eurorack::Feature::Socket::Array;
 use Eurorack::Feature::Socket::Column;
 use Eurorack::Feature::Knob::Basic;
+use Eurorack::Feature::Switch::Rocker;
+use Eurorack::Feature::SectionBorder::Basic;
 
 sub BUILD($self, $args) {
+    # Add section borders first (rendered before features)
+    $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
+        x => 15, y => 35, width => 70, height => 50
+    ));
+    $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
+        x => 90, y => 85, width => 60, height => 45
+    ));
+    $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
+        x => 190, y => 85, width => 60, height => 45
+    ));
+    $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
+        x => 268, y => 5, width => 25, height => 65
+    ));
+    
     $self->add_feature(Eurorack::Feature::Socket::MIDI::Din->new(x =>20, y => 20, label_text => 'MIDI In', label_inverted => 1));
     $self->add_feature(Eurorack::Feature::Socket::USB::TypeB->new(x =>50, y => 20));
     $self->add_feature(Eurorack::Feature::Socket::USB::TypeC->new(x =>50, y => 50));
@@ -59,6 +75,9 @@ sub BUILD($self, $args) {
     ));
     $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 20));
     $self->add_feature(Eurorack::Feature::Knob::Basic->new(x => 100, y => 50, radius => 4, min_value => 0, max_value => 4, labels => ["32'", "16'", "8'", "4'", "2'"], start_angle => 180, angle_range => 180, value => 2));
+    $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 160, y => 40, state => 'on', label_text => 'Filter'));
+    $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 160, y => 60, state => 'off', orientation => 'horizontal'));
+    $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 180, y => 60, state => 'on', orientation => 'vertical', on_label => 'Hi', off_label => 'Lo'));
 }
 
 1;
