@@ -59,7 +59,7 @@ sub BUILD($self, $args) {
         count => 3,
         labels => [
             'Input',
-            { label_text => 'Output', label_position => 'south' },
+            { label_text => 'Output', label_position => 'south', socket_type => 'output' },
             { label_text => 'CV', label_inverted => 1 }
         ]
     ));
@@ -74,7 +74,11 @@ sub BUILD($self, $args) {
         columns => 3,
         rows => 2,
         labels => [
-            ['Out1', 'Out2', 'Out3'],
+            [
+                { label_text => 'Out1', socket_type => 'output' },
+                { label_text => 'Out2', socket_type => 'output' },
+                { label_text => 'Out3', socket_type => 'output' }
+            ],
             ['CV1', 'CV2', 'CV3']
         ]
     ));
