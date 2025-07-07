@@ -8,7 +8,7 @@ with
 
 # Two 3U rows of 140HP
 has '+rows_u'   => (default => sub { return [3, 3] });
-has '+width_hp' => (default => 140);
+has '+width_hp' => (default => 94);
 
 __PACKAGE__->meta->make_immutable;
 1;
