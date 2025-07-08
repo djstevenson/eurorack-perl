@@ -8,6 +8,7 @@ with
   'Eurorack::Role::LabelRenderer';
 
 use Eurorack::Feature::Label;
+use Eurorack::Feature::Socket::Type;
 
 has 'label_text' => (
     is        => 'ro',
@@ -33,6 +34,14 @@ has 'label_inverted' => (
     default => 0,
 );
 
+has 'socket_type' => (
+    is      => 'ro',
+    isa     => 'SocketType',
+    coerce  => 1,
+    default => 'input',
+    documentation => 'Type of socket: input or output. Used for directional arrows in labels.',
+);
+
 has 'label' => (
     is        => 'rw',
     isa       => 'Eurorack::Feature::Label',
@@ -49,10 +58,11 @@ sub BUILD($self, $args) {
     my $text = $self->has_label_text ? $self->label_text : $self->_default_label_text;
     if (defined $text) {
         my $label = Eurorack::Feature::Label->new(
-            text     => $text,
-            position => $self->label_position,
-            distance => $self->label_distance,
-            inverted => $self->label_inverted,
+            text        => $text,
+            position    => $self->label_position,
+            distance    => $self->label_distance,
+            inverted    => $self->label_inverted,
+            socket_type => $self->socket_type,
         );
         $self->label($label);
     }

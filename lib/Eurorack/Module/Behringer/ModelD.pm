@@ -19,24 +19,27 @@ use Eurorack::Feature::Socket::Array;
 use Eurorack::Feature::Socket::Column;
 use Eurorack::Feature::Knob::Basic;
 use Eurorack::Feature::Switch::Rocker;
+use Eurorack::Feature::Switch::Rocker::Array;
+use Eurorack::Feature::Switch::Rocker::Row;
+use Eurorack::Feature::Switch::Rocker::Column;
 use Eurorack::Feature::SectionBorder::Basic;
 use Eurorack::Feature::Text::Basic;
 
 sub BUILD($self, $args) {
     # Add text markings first (rendered behind everything)
     $self->add_text(Eurorack::Feature::Text::Basic->new(
-        x => 50, y => 95, text => 'INPUTS', font_size => 5, font_weight => 'bold'
+        x => 37, y => 58, text => 'CONTROL', font_size => 5, font_weight => 'bold'
     ));
-    $self->add_text(Eurorack::Feature::Text::Basic->new(
-        x => 220, y => 95, text => 'OUTPUTS', font_size => 5, font_weight => 'bold'
-    ));
+    # $self->add_text(Eurorack::Feature::Text::Basic->new(
+    #     x => 220, y => 95, text => 'OUTPUTS', font_size => 5, font_weight => 'bold'
+    # ));
     $self->add_text(Eurorack::Feature::Text::Basic->new(
         x => 280, y => 90, text => 'CV', font_size => 5, font_weight => 'bold'
     ));
     
     # Add section borders next (rendered before features)
     $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
-        x => 15, y => 35, width => 70, height => 50
+        x => 8, y => 3, width => 55, height => 60
     ));
     $self->add_section(Eurorack::Feature::SectionBorder::Basic->new(
         x => 90, y => 85, width => 60, height => 45
@@ -48,10 +51,10 @@ sub BUILD($self, $args) {
         x => 268, y => 5, width => 25, height => 65
     ));
     
-    $self->add_feature(Eurorack::Feature::Socket::MIDI::Din->new(x =>20, y => 20, label_text => 'MIDI In', label_inverted => 1));
+    $self->add_feature(Eurorack::Feature::Socket::MIDI::Din->new(x => 20, y => 20, label_text => 'MIDI In', label_distance => 10));
     $self->add_feature(Eurorack::Feature::Socket::USB::TypeB->new(x =>50, y => 20));
     $self->add_feature(Eurorack::Feature::Socket::USB::TypeC->new(x =>50, y => 50));
-    $self->add_feature(Eurorack::Feature::Socket::USB::TypeA->new(x =>50, y => 80));
+    $self->add_feature(Eurorack::Feature::Socket::USB::TypeA->new(x =>20, y => 50));
     $self->add_feature(Eurorack::Feature::Socket::Row->new(
         x => 100, y => 100,
         socket_class => 'Eurorack::Feature::Socket::Jack::Mono3_5mm::HexNut',
@@ -59,8 +62,8 @@ sub BUILD($self, $args) {
         count => 3,
         labels => [
             'Input',
-            { label_text => 'Output', label_position => 'south' },
-            { label_text => 'CV', label_inverted => 1 }
+            { label_text => 'Output', socket_type => 'output' },
+            'CV'
         ]
     ));
     $self->add_feature(Eurorack::Feature::Socket::Jack::Mono3_5mm::HexNut->new(x =>100, y => 120));
@@ -74,7 +77,11 @@ sub BUILD($self, $args) {
         columns => 3,
         rows => 2,
         labels => [
-            ['Out1', 'Out2', 'Out3'],
+            [
+                { label_text => 'Out1', socket_type => 'output' },
+                { label_text => 'Out2', socket_type => 'output' },
+                { label_text => 'Out3', socket_type => 'output' }
+            ],
             ['CV1', 'CV2', 'CV3']
         ]
     ));
@@ -90,6 +97,46 @@ sub BUILD($self, $args) {
     $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 160, y => 40, state => 'on', label_text => 'Filter'));
     $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 160, y => 60, state => 'off', orientation => 'horizontal'));
     $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 180, y => 60, state => 'on', orientation => 'vertical', on_label => 'Hi', off_label => 'Lo'));
+    
+    # Examples of rocker switch arrays
+    $self->add_feature(Eurorack::Feature::Switch::Rocker::Row->new(
+        x => 300, y => 20,
+        spacing => 15,
+        count => 3,
+        labels => [
+            { label_text => 'A', state => 'on' },
+            { label_text => 'B', state => 'off' },
+            { label_text => 'C', state => 'on' }
+        ]
+    ));
+    
+    $self->add_feature(Eurorack::Feature::Switch::Rocker::Column->new(
+        x => 320, y => 40,
+        spacing => 15,
+        count => 2,
+        labels => [
+            { label_text => 'Mode 1', state => 'on', orientation => 'vertical' },
+            { label_text => 'Mode 2', state => 'off', orientation => 'vertical' }
+        ]
+    ));
+    
+    $self->add_feature(Eurorack::Feature::Switch::Rocker::Array->new(
+        x => 300, y => 80,
+        spacing_x => 15,
+        spacing_y => 15,
+        columns => 2,
+        rows => 2,
+        labels => [
+            [
+                { label_text => 'SW1', state => 'on' },
+                { label_text => 'SW2', state => 'off' }
+            ],
+            [
+                { label_text => 'SW3', state => 'off' },
+                { label_text => 'SW4', state => 'on' }
+            ]
+        ]
+    ));
 }
 
 1;
