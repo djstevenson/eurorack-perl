@@ -1,4 +1,4 @@
-package Eurorack::Feature::Socket::Array;
+package Eurorack::Feature::Switch::Rocker::Array;
 use Moose;
 use namespace::autoclean;
 use Eurorack::Prelude;
@@ -6,10 +6,10 @@ use Eurorack::Feature::Array;
 
 with 'Eurorack::Role::Feature';
 
-has 'socket_class' => (
+has 'switch_class' => (
     is       => 'ro',
     isa      => 'Str',
-    required => 1,
+    default  => 'Eurorack::Feature::Switch::Rocker',
 );
 
 has 'spacing_x' => (
@@ -54,7 +54,7 @@ sub _build_array($self) {
     return Eurorack::Feature::Array->new(
         x => $self->x,
         y => $self->y,
-        feature_class => $self->socket_class,
+        feature_class => $self->switch_class,
         spacing_x => $self->spacing_x,
         spacing_y => $self->spacing_y,
         columns => $self->columns,

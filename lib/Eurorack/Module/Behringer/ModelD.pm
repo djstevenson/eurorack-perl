@@ -19,6 +19,9 @@ use Eurorack::Feature::Socket::Array;
 use Eurorack::Feature::Socket::Column;
 use Eurorack::Feature::Knob::Basic;
 use Eurorack::Feature::Switch::Rocker;
+use Eurorack::Feature::Switch::Rocker::Array;
+use Eurorack::Feature::Switch::Rocker::Row;
+use Eurorack::Feature::Switch::Rocker::Column;
 use Eurorack::Feature::SectionBorder::Basic;
 use Eurorack::Feature::Text::Basic;
 
@@ -94,6 +97,46 @@ sub BUILD($self, $args) {
     $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 160, y => 40, state => 'on', label_text => 'Filter'));
     $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 160, y => 60, state => 'off', orientation => 'horizontal'));
     $self->add_feature(Eurorack::Feature::Switch::Rocker->new(x => 180, y => 60, state => 'on', orientation => 'vertical', on_label => 'Hi', off_label => 'Lo'));
+    
+    # Examples of rocker switch arrays
+    $self->add_feature(Eurorack::Feature::Switch::Rocker::Row->new(
+        x => 300, y => 20,
+        spacing => 15,
+        count => 3,
+        labels => [
+            { label_text => 'A', state => 'on' },
+            { label_text => 'B', state => 'off' },
+            { label_text => 'C', state => 'on' }
+        ]
+    ));
+    
+    $self->add_feature(Eurorack::Feature::Switch::Rocker::Column->new(
+        x => 320, y => 40,
+        spacing => 15,
+        count => 2,
+        labels => [
+            { label_text => 'Mode 1', state => 'on', orientation => 'vertical' },
+            { label_text => 'Mode 2', state => 'off', orientation => 'vertical' }
+        ]
+    ));
+    
+    $self->add_feature(Eurorack::Feature::Switch::Rocker::Array->new(
+        x => 300, y => 80,
+        spacing_x => 15,
+        spacing_y => 15,
+        columns => 2,
+        rows => 2,
+        labels => [
+            [
+                { label_text => 'SW1', state => 'on' },
+                { label_text => 'SW2', state => 'off' }
+            ],
+            [
+                { label_text => 'SW3', state => 'off' },
+                { label_text => 'SW4', state => 'on' }
+            ]
+        ]
+    ));
 }
 
 1;
